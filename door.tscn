@@ -1,0 +1,127 @@
+[gd_scene load_steps=14 format=3 uid="uid://cl0jlas0hf11t"]
+
+[ext_resource type="Script" path="res://door.gd" id="1_10hnm"]
+[ext_resource type="Texture2D" uid="uid://c1jkcpxe5mhs0" path="res://Door.png" id="1_q42mq"]
+[ext_resource type="Resource" uid="uid://dd5fib2phc27x" path="res://Resources/status_effects/damage_up.tres" id="2_pysx4"]
+[ext_resource type="Resource" uid="uid://b7ybgp6vpi7lt" path="res://Resources/status_effects/health_up.tres" id="3_6p5ax"]
+[ext_resource type="FontFile" uid="uid://c2hmtum28087v" path="res://Varnished.ttf" id="3_e4fqv"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4k3tx"]
+atlas = ExtResource("1_q42mq")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wcor0"]
+atlas = ExtResource("1_q42mq")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jc33t"]
+atlas = ExtResource("1_q42mq")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y1spa"]
+atlas = ExtResource("1_q42mq")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cnyr0"]
+atlas = ExtResource("1_q42mq")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_a2hgw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4k3tx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wcor0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jc33t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y1spa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cnyr0")
+}],
+"loop": false,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5rfbc"]
+size = Vector2(25.1582, 22.3101)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3ui0r"]
+content_margin_left = 5.0
+content_margin_top = 5.0
+content_margin_right = 5.0
+content_margin_bottom = 5.0
+bg_color = Color(0, 0, 0, 0.505882)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_blend = true
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+corner_detail = 1
+expand_margin_left = 2.0
+expand_margin_top = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 2.0
+shadow_color = Color(0, 0, 0, 0.403922)
+shadow_size = 1
+shadow_offset = Vector2(0.45, 0.445)
+
+[node name="Door" type="Area2D" groups=["door"]]
+position = Vector2(216, 91)
+scale = Vector2(4, 4)
+collision_mask = 2
+script = ExtResource("1_10hnm")
+status_effect_resource_array = Array[Resource("res://status_effects_resource.gd")]([ExtResource("2_pysx4"), ExtResource("3_6p5ax")])
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_a2hgw")
+metadata/_aseprite_wizard_config_ = {
+"layer": "",
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"op_exp": false,
+"source": "C:/Users/Shigshagor/Documents/Aseprite Save/Door.aseprite"
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.39557, 0.0791137)
+shape = SubResource("RectangleShape2D_5rfbc")
+
+[node name="DoorLabel" type="Label" parent="."]
+unique_name_in_owner = true
+visible = false
+anchors_preset = -1
+anchor_right = 0.5
+offset_left = -37.25
+offset_top = 19.0
+offset_right = 33.75
+offset_bottom = 103.0
+grow_horizontal = 2
+size_flags_vertical = 8
+theme_override_fonts/font = ExtResource("3_e4fqv")
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_3ui0r")
+text = "+Damage
+-Spread
+
+Behind Door:
+Death Explosions"
+autowrap_mode = 3
+
+[node name="StatusEffectsModule" type="Node2D" parent="."]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

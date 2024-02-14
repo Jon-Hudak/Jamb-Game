@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="Status_Effects_Resource" load_steps=2 format=3 uid="uid://dd5fib2phc27x"]
+
+[ext_resource type="Script" path="res://status_effects_resource.gd" id="1_seshp"]
+
+[resource]
+script = ExtResource("1_seshp")
+magazine_size = 0
+fire_rate = 0.0
+damage = 0
+bullet_speed = 0
+extra_bullets_in_spread = 0
+bullet_spread_angle = 0.0
+door_message = "+Damage"

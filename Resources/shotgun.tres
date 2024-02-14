@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="Weapon_Resource" load_steps=3 format=3 uid="uid://byich0dhpeu6s"]
+
+[ext_resource type="Texture2D" uid="uid://chjg1l7qg70hv" path="res://Assets/Sprite-0001.png" id="1_umwp8"]
+[ext_resource type="Script" path="res://weapon_resource.gd" id="1_w512g"]
+
+[resource]
+script = ExtResource("1_w512g")
+weapon_name = ""
+current_ammo = -1
+magazine_size = -1
+fire_rate = 0.5
+damage = 20.14
+bullet_speed = 380
+auto_fire = true
+extra_bullets_in_spread = 1
+bullet_spread_angle = 0.2
+bullet_sprite = ExtResource("1_umwp8")
+gun_sprite_scale = 1.0
+bullet_sprite_scale = 2.33

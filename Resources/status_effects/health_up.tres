@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Status_Effects_Resource" load_steps=2 format=3 uid="uid://b7ybgp6vpi7lt"]
+
+[ext_resource type="Script" path="res://status_effects_resource.gd" id="1_aa3p0"]
+
+[resource]
+script = ExtResource("1_aa3p0")
+magazine_size = 0
+fire_rate = 0.0
+damage = 317
+bullet_speed = 0
+movement_speed = 0
+extra_bullets_in_spread = 0
+bullet_spread_angle = 0.0
+door_message = "+Health"

@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="Weapon_Resource" load_steps=3 format=3 uid="uid://bxnukga7jjyf2"]
+
+[ext_resource type="Texture2D" uid="uid://chjg1l7qg70hv" path="res://Assets/Sprite-0001.png" id="1_aeuci"]
+[ext_resource type="Script" path="res://weapon_resource.gd" id="1_eijmv"]
+
+[resource]
+script = ExtResource("1_eijmv")
+weapon_name = "pistol"
+current_ammo = -1
+magazine_size = -1
+fire_rate = 0.5
+damage = 10.0
+bullet_speed = 200
+auto_fire = false
+extra_bullets_in_spread = 0
+bullet_spread_angle = 0.1
+bullet_sprite = ExtResource("1_aeuci")
+gun_sprite_scale = 1.0
+bullet_sprite_scale = 2.505
