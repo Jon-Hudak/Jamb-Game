@@ -40,22 +40,7 @@ func update_gun():
 func shoot():
 	if timer.time_left<=0:
 		for angle in bullet_spread_array:
-			
-			var new_bullet = bullet_scene.instantiate() 
-			new_bullet.sprite=resource.bullet_sprite
-			new_bullet.sprite_scale=resource.bullet_sprite_scale
-			new_bullet.rotation= rotation + angle
-			new_bullet.damage= damage
-			new_bullet.speed = bullet_speed
-			
-			new_bullet.global_position= global_position + Vector2(50,0).rotated(rotation)
-			if fired_by_player:
-				new_bullet.set_collision_mask_value(3, true) #if gun is fired by player, bullets detect enemies and vice versa
-			else:
-				new_bullet.set_collision_mask_value(2, true)
-				new_bullet.modulate = Color(1,0,0)
-			
-			owner.add_child(new_bullet)
+			instance_bullet(angle)
 		if fire_rate>0.2:
 			timer.start(fire_rate)
 		
@@ -68,9 +53,29 @@ func get_bullet_spread_array():
 		bullet_spread_array.push_back(spread_angle * (bullet+1))
 		bullet_spread_array.push_back(spread_angle * (bullet+1) * -1)
 		
+func circle_attack():
+	
+	for angle in [deg_to_rad(0),deg_to_rad(45),deg_to_rad(90),deg_to_rad(135),deg_to_rad(180),deg_to_rad(-45),deg_to_rad(-90),deg_to_rad(-135),]:
+		instance_bullet(angle)
+		
 		
 
 func weapon_change():
 	get_bullet_spread_array()
 
-
+func instance_bullet(angle=0):
+	var new_bullet = bullet_scene.instantiate() 
+	new_bullet.sprite=resource.bullet_sprite
+	new_bullet.sprite_scale=resource.bullet_sprite_scale
+	new_bullet.rotation= angle + rotation
+	new_bullet.damage= damage
+	new_bullet.speed = bullet_speed
+	
+	new_bullet.global_position= global_position + Vector2(50,0).rotated(rotation)
+	if fired_by_player:
+		new_bullet.set_collision_mask_value(3, true) #if gun is fired by player, bullets detect enemies and vice versa
+	else:
+		new_bullet.set_collision_mask_value(2, true)
+		new_bullet.modulate = Color(1,0,0)
+	
+	owner.add_child(new_bullet)

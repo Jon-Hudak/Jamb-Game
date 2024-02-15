@@ -4,9 +4,9 @@ signal boss_died
 
 @export var max_health : int = 20
 
-@export var speed= 100
-@export var range_to_player : int = 350
-@export var timer_min : float = 0.1
+@export var speed= 300
+@export var range_to_target : int = 350
+@export var timer_min : float = 1
 @export var timer_max : float = 2
 @onready var player = get_node("/root/Main/Player")
 @onready var move_timer = $MoveTimer
@@ -14,16 +14,12 @@ signal boss_died
 @export var status_effect_resource : Array[Status_Effects_Resource]
 var strafe_direction : Vector2 = Vector2.ZERO
 var direction : Vector2 = Vector2.ZERO
-var isShooting : bool = false
+var isAttacking : bool = false
 var health : int
+var added_speed : int = 0
+var attack_list : Array = [ "shoot","bowling_attack", "circle_attack",]
+var current_attack = attack_list[0]
 
-var attack_list : Array = [attack1, attack2]
-
-func attack1():
-	print("attack1")
-
-func attack2():
-	print("attack2")
 
 func _ready():
 	if status_effect_resource:
@@ -33,17 +29,23 @@ func _ready():
 	$Gun.target=player.global_position
 	move_timer.start(calculate_timer())
 	
-	call(attack_list.pick_random())
 	
 	#direction=update_direction()
 
 func _physics_process(_delta):
 	$Gun.target=player.global_position
-	if isShooting:
-		shoot()
 	
+	if isAttacking && current_attack=="bowling_attack":
+		if move() == true:
+			update_direction(player,false)
+			
+			
 	else:
-		move()
+		shoot()
+		if move() == true:
+			update_direction(player,true)
+	
+	
 		
 
 func take_damage(damage):
@@ -57,34 +59,52 @@ func shoot():
 	$Gun.target=player.global_position
 	$Gun.shoot()
 	
-
-
-func update_direction():
-	var direction_to_player = global_position.direction_to(player.global_position)
+func update_direction(target=player, random : bool = true):
+	var direction_to_target = global_position.direction_to(target.global_position)
 	#var randomized_direction = 1 if randi_range(0,1) == 1 else -1
 	var randomized_direction = deg_to_rad(randi_range(1,360))
-	if global_position.distance_to(player.global_position)>range_to_player:
-		direction=direction_to_player
+	if !random || global_position.distance_to(target.global_position)>range_to_target:
+		direction=direction_to_target
 	else:
-		direction= direction_to_player.rotated(deg_to_rad(90*randomized_direction))
+		direction = direction_to_target.rotated(deg_to_rad(90*randomized_direction))
 	
 func move():
-	velocity = direction * speed
-	move_and_slide()
+	velocity = direction * (speed + added_speed)
+	return move_and_slide()
 	
-func calculate_timer():
-	return randf_range(timer_min,timer_max)
+func calculate_timer(min=timer_max, max=timer_max):
+	return randf_range(min, max)
 
 
 func _on_move_timer_timeout():
-	update_direction()
-	shoot_timer.start(calculate_timer())
-	isShooting=true
+	current_attack=attack_list.pick_random()
+	call(current_attack)
+	print(current_attack)
+	
+	
 
 
 func _on_shoot_timer_timeout():
+	added_speed=0
+	update_direction(player, true)
 	move_timer.start(calculate_timer())
-	isShooting=false
+	isAttacking=false
+
+
+func bowling_attack():
+	
+	print("bowling_attack")
+	update_direction(player, false)
+	shoot_timer.start(calculate_timer(5,10))
+	isAttacking=true
+
+func circle_attack():
+	$Gun.circle_attack()
+	print("circle_attack")
+	shoot()	
+	shoot_timer.start(calculate_timer())
+	isAttacking=true
+	
 	
 func update_stats(new_resources : Array[Status_Effects_Resource]):
 	for new_resource : Status_Effects_Resource in new_resources:

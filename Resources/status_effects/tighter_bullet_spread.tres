@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Status_Effects_Resource" load_steps=2 format=3 uid="uid://h8sfaj7miiab"]
+[gd_resource type="Resource" script_class="Status_Effects_Resource" load_steps=2 format=3 uid="uid://c0q552ntlnrwt"]
 
 [ext_resource type="Script" path="res://status_effects_resource.gd" id="1_uy68e"]
 
@@ -12,5 +12,5 @@ movement_speed = 0
 max_health = 0
 isDebuff = false
 extra_bullets_in_spread = 0
-bullet_spread_angle = -0.1
+bullet_spread_angle = -0.2
 door_message = "-Angle"

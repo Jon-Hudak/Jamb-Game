@@ -7,7 +7,7 @@ var enemy_status_effects : Array[Status_Effects_Resource]
 # Called when the node enters the scene tree for the first time.
 
 func _ready():
-	pass
+	$CollisionShape2D.disabled=true
 	
 
 

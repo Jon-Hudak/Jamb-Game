@@ -14,7 +14,7 @@ signal enemy_died
 @export var status_effect_resource : Array[Status_Effects_Resource]
 var strafe_direction : Vector2 = Vector2.ZERO
 var direction : Vector2 = Vector2.ZERO
-var isShooting : bool = false
+var isAttacking : bool = false
 var health : int
 
 
@@ -30,7 +30,7 @@ func _ready():
 
 func _physics_process(_delta):
 	$Gun.target=player.global_position
-	if isShooting:
+	if isAttacking:
 		shoot()
 	
 	else:
@@ -70,12 +70,12 @@ func calculate_timer():
 func _on_move_timer_timeout():
 	update_direction()
 	shoot_timer.start(calculate_timer())
-	isShooting=true
+	isAttacking=true
 
 
 func _on_shoot_timer_timeout():
 	move_timer.start(calculate_timer())
-	isShooting=false
+	isAttacking=false
 	
 func update_stats(new_resources : Array[Status_Effects_Resource]):
 	for new_resource : Status_Effects_Resource in new_resources:

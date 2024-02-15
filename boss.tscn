@@ -1,8 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://bqldewmvd7lha"]
+[gd_scene load_steps=9 format=3 uid="uid://itumeq1lo2tf"]
 
 [ext_resource type="Script" path="res://Boss.gd" id="1_83ylm"]
 [ext_resource type="Texture2D" uid="uid://b2k8iyan7gsti" path="res://Assets/Boss.png" id="2_iwuii"]
-[ext_resource type="PackedScene" uid="uid://cq8bgmoeh7410" path="res://gun.tscn" id="4_clv88"]
+[ext_resource type="PackedScene" path="res://gun.tscn" id="4_clv88"]
 [ext_resource type="PackedScene" uid="uid://dg17o6xksh21u" path="res://BloodParticles.tscn" id="6_1eh5m"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ybksx"]
@@ -32,11 +32,9 @@ size = Vector2(125, 112)
 
 [node name="Boss" type="CharacterBody2D" groups=["enemy"]]
 collision_layer = 4
-collision_mask = 5
+collision_mask = 3
 script = ExtResource("1_83ylm")
 max_health = 500
-speed = 300
-range_to_player = 500
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(-1.49999, 88)
