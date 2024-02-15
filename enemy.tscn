@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Enemy.gd" id="1_ifqy1"]
 [ext_resource type="Texture2D" uid="uid://5lqe5pp65giq" path="res://Assets/Sprite-0004-Sheet.png" id="2_f0e1n"]
-[ext_resource type="PackedScene" path="res://gun.tscn" id="3_25elu"]
+[ext_resource type="PackedScene" uid="uid://cq8bgmoeh7410" path="res://gun.tscn" id="3_25elu"]
 [ext_resource type="PackedScene" uid="uid://dg17o6xksh21u" path="res://BloodParticles.tscn" id="6_c4tlr"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ghygt"]

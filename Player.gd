@@ -15,20 +15,26 @@ func _physics_process(_delta):
 	Input.get_action_strength("right") - Input.get_action_strength("left"),
 	Input.get_action_strength("down") - Input.get_action_strength("up")
 	)
-	$Gun.target=get_global_mouse_position()
+	var shot_direction = Vector2(
+	Input.get_action_strength("shoot_right") - Input.get_action_strength("shoot_left"),
+	Input.get_action_strength("shoot_down") - Input.get_action_strength("shoot_up")
+	)
+	print(shot_direction)
+	$Gun.target=shot_direction if shot_direction!= Vector2.ZERO else get_global_mouse_position() 
 	velocity=speed*input_direction.normalized()
 	
 	# Flip sprite whan moving left
 	$Sprite2D.flip_h=true if velocity.x<0 else false
 	
 	
-	if Input.is_action_pressed("shoot"):
+	if Input.is_action_pressed("shoot") || Input.is_action_pressed("shoot_up") || Input.is_action_pressed("shoot_down") || Input.is_action_pressed("shoot_right") || Input.is_action_pressed("shoot_left"):
 		$Gun.shoot()
-		if global_position.direction_to(get_global_mouse_position()).x<0:
-			#flip sprite when aiming left (overwrites movement)
-			$Sprite2D.flip_h=true 
-		else:
-			$Sprite2D.flip_h=false
+		
+	if global_position.direction_to(shot_direction).x<0:
+		#flip sprite when aiming left (overwrites movement)
+		$Sprite2D.flip_h=true 
+	else:
+		$Sprite2D.flip_h=false
 			
 		
 	if velocity!=Vector2.ZERO:

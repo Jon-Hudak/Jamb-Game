@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://main.gd" id="1_4qa7l"]
 [ext_resource type="PackedScene" uid="uid://cikc8nbmcdefa" path="res://player.tscn" id="3_kxrvv"]
 [ext_resource type="PackedScene" uid="uid://cl0jlas0hf11t" path="res://door.tscn" id="5_o832h"]
-[ext_resource type="PackedScene" uid="uid://itumeq1lo2tf" path="res://boss.tscn" id="6_b8314"]
+[ext_resource type="PackedScene" uid="uid://bqldewmvd7lha" path="res://boss.tscn" id="6_b8314"]
 [ext_resource type="PackedScene" uid="uid://ir32po0sb3rq" path="res://shotgun_pickup.tscn" id="7_hsfff"]
 [ext_resource type="PackedScene" uid="uid://qjm3k0r8nisy" path="res://enemy.tscn" id="7_mqlxc"]
 [ext_resource type="Script" path="res://Gun.gd" id="7_t03u6"]
