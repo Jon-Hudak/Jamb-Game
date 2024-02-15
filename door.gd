@@ -31,21 +31,24 @@ func hide_doors():
 
 func _on_body_entered(body):
 	if body.has_method("update_stats"):
-		body.update_stats(status_effect_resource_array)
+		body.update_stats(player_status_effects)
 	
-	door_entered.emit(name)
+	door_entered.emit(name, enemy_status_effects)
 
 func set_label(text:String):
 	$DoorLabel.text=text
 
 func update_door():
-	var door_bonuses = [status_effect_resource_array.pick_random(), status_effect_resource_array.pick_random()]
-	var door_penalty = [status_effect_resource_array.pick_random()]
+	player_status_effects = [status_effect_resource_array.pick_random()]
+	#, status_effect_resource_array.pick_random()]
+	enemy_status_effects = [status_effect_resource_array.pick_random(), status_effect_resource_array.pick_random()]
+	
+	
 	var door_text = "Behind Door:"
-	for bonus in door_bonuses:
+	for bonus in player_status_effects:
 		door_text+="\n"+bonus.door_message
-			
-	for penalty in door_penalty:
+	door_text+="\n\nEnemy:"
+	for penalty in enemy_status_effects:
 		if penalty.isDebuff==false:
-			door_text+="\n\nEnemy:\n" + penalty.door_message
+			door_text+= "\n" + penalty.door_message
 	change_door_label(door_text)

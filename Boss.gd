@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-signal enemy_died
+signal boss_died
 
 @export var max_health : int = 20
 
@@ -17,6 +17,13 @@ var direction : Vector2 = Vector2.ZERO
 var isShooting : bool = false
 var health : int
 
+var attack_list : Array = [attack1, attack2]
+
+func attack1():
+	print("attack1")
+
+func attack2():
+	print("attack2")
 
 func _ready():
 	if status_effect_resource:
@@ -25,6 +32,8 @@ func _ready():
 	print("damage: ",$Gun.damage, "Health: ", max_health, "currHP",health )
 	$Gun.target=player.global_position
 	move_timer.start(calculate_timer())
+	
+	call(attack_list.pick_random())
 	
 	#direction=update_direction()
 

@@ -19,6 +19,7 @@ var bullet_spread_array : Array[float] =[0]
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	look_at(target)
 	update_gun()
 
 
@@ -44,8 +45,8 @@ func shoot():
 			new_bullet.sprite=resource.bullet_sprite
 			new_bullet.sprite_scale=resource.bullet_sprite_scale
 			new_bullet.rotation= rotation + angle
-			new_bullet.damage=resource.damage + damage
-			new_bullet.speed = resource.bullet_speed + bullet_speed
+			new_bullet.damage= damage
+			new_bullet.speed = bullet_speed
 			
 			new_bullet.global_position= global_position + Vector2(50,0).rotated(rotation)
 			if fired_by_player:
@@ -57,17 +58,16 @@ func shoot():
 			owner.add_child(new_bullet)
 		if fire_rate>0.2:
 			timer.start(fire_rate)
-		print(fire_rate)
-		print(timer.time_left)
+		
 	
 
 func get_bullet_spread_array():
 	bullet_spread_array=[0]
-	print(extra_bullets_in_spread)
+	
 	for bullet in extra_bullets_in_spread:
 		bullet_spread_array.push_back(spread_angle * (bullet+1))
 		bullet_spread_array.push_back(spread_angle * (bullet+1) * -1)
-		print(bullet_spread_array)
+		
 		
 
 func weapon_change():

@@ -1,10 +1,14 @@
-[gd_scene load_steps=14 format=3 uid="uid://cl0jlas0hf11t"]
+[gd_scene load_steps=18 format=3 uid="uid://cl0jlas0hf11t"]
 
 [ext_resource type="Script" path="res://door.gd" id="1_10hnm"]
 [ext_resource type="Texture2D" uid="uid://c1jkcpxe5mhs0" path="res://Door.png" id="1_q42mq"]
 [ext_resource type="Resource" uid="uid://dd5fib2phc27x" path="res://Resources/status_effects/damage_up.tres" id="2_pysx4"]
 [ext_resource type="Resource" uid="uid://b7ybgp6vpi7lt" path="res://Resources/status_effects/health_up.tres" id="3_6p5ax"]
 [ext_resource type="FontFile" uid="uid://c2hmtum28087v" path="res://Varnished.ttf" id="3_e4fqv"]
+[ext_resource type="Resource" uid="uid://cu6nc6m6l8dlr" path="res://Resources/status_effects/bullet_speed_up.tres" id="4_q1186"]
+[ext_resource type="Resource" uid="uid://d3wmx080kayd2" path="res://Resources/status_effects/bullet_spread_up.tres" id="5_yy5vu"]
+[ext_resource type="Resource" uid="uid://yrq5nvjwrrrc" path="res://Resources/status_effects/move_speed.tres" id="6_5y532"]
+[ext_resource type="Resource" uid="uid://h8sfaj7miiab" path="res://Resources/status_effects/tighter_bullet_spread.tres" id="7_1tv74"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4k3tx"]
 atlas = ExtResource("1_q42mq")
@@ -81,7 +85,7 @@ position = Vector2(216, 91)
 scale = Vector2(4, 4)
 collision_mask = 2
 script = ExtResource("1_10hnm")
-status_effect_resource_array = Array[Resource("res://status_effects_resource.gd")]([ExtResource("2_pysx4"), ExtResource("3_6p5ax")])
+status_effect_resource_array = Array[Resource("res://status_effects_resource.gd")]([ExtResource("2_pysx4"), ExtResource("3_6p5ax"), ExtResource("4_q1186"), ExtResource("5_yy5vu"), ExtResource("6_5y532"), ExtResource("7_1tv74")])
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

@@ -1,4 +1,6 @@
 extends CharacterBody2D
+@export var max_health : int = 20
+@export var health : int = max_health
 @export var speed : int = 200
 @onready var animation_tree = $AnimationTree
 var status_effect_resources : Array[Status_Effects_Resource]
@@ -38,7 +40,10 @@ func _physics_process(_delta):
 	
 func take_damage(damage):
 	$BloodParticles.emitting= true
-	pass
+	health-=damage
+	if health<=0:
+		get_tree().reload_current_scene()
+			
 	
 func pickup_weapon(weapon):
 	$Gun.resource=preload("res://Resources/shotgun.tres")
@@ -55,8 +60,14 @@ func update_blend_position(direction : Vector2):
 func update_stats(new_resources : Array[Status_Effects_Resource]):
 	for new_resource : Status_Effects_Resource in new_resources:
 		speed += new_resource.movement_speed
+		max_health+= new_resource.max_health
+		health+=new_resource.max_health
+		if health>max_health:
+			health=max_health
 		$Gun.fire_rate += new_resource.fire_rate
 		$Gun.damage += new_resource.damage
 		$Gun.bullet_speed += new_resource.bullet_speed
 		$Gun.extra_bullets_in_spread += new_resource.extra_bullets_in_spread
+		$Gun.spread_angle += new_resource.bullet_spread_angle
+		$Gun.weapon_change()
 		#$Gun.bullet_spread_angle += new_resource.bullet_spread_angle

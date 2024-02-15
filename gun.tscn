@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://cq8bgmoeh7410"]
+
+[ext_resource type="Script" path="res://Gun.gd" id="1_tqfy5"]
+[ext_resource type="Resource" uid="uid://bxnukga7jjyf2" path="res://Resources/pistol.tres" id="2_7gvdn"]
+[ext_resource type="PackedScene" uid="uid://dxra8funy7eji" path="res://bullet.tscn" id="3_gc8sy"]
+
+[node name="Gun" type="Node2D"]
+position = Vector2(-1, 4)
+script = ExtResource("1_tqfy5")
+resource = ExtResource("2_7gvdn")
+bullet_scene = ExtResource("3_gc8sy")
+current_weapon = ExtResource("2_7gvdn")
+
+[node name="FireRateTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="FireRateTimer" to="." method="_on_fire_rate_timer_timeout"]

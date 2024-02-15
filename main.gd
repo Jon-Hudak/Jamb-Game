@@ -5,50 +5,13 @@ var doors_opened : int = 0
 var door_array : Array = [{}]
 var score : int = 0
 var has_won = false
-var effects_array : Array = [{
-	  "name": "damage_up",
-	  "amount": 10,
-	  "duration": -1,
-	  "door_message": "+Damage"
-	},
-	{"name": "bullet_spread_up",
-	  "amount": 1,
-	  "duration": -1,
-	  "door_message": "+Spread"
-	},
-	{"name": "movement_speed_up",
-	  "amount": 100,
-	  "duration": -1,
-	  "door_message": "+Speed"
-	},
-	{"name": "movement_speed_down",
-	  "amount": 100,
-	  "duration": 1,
-	  "door_message": "-Speed",
-	  "debuff":true
-	},
-	{"name": "bullet_speed_up",
-	  "amount": 100,
-	  "duration": -1,
-	  "door_message": "+Bullet Speed"
-	},
-	{"name": "bullet_piercing",
-	  "amount": 1,
-	  "duration": -1,
-	  "door_message": "+Piercing"
-	},
-	{"name": "max_health_up",
-	  "amount": 10,
-	  "duration": -1,
-	  "door_message": "+Max HP"
-	}
-  ]
+var enemy_bonus : Array [Status_Effects_Resource]
 
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	spawn_enemies(3)
+	#spawn_enemies(3)
 	var doors = get_tree().get_nodes_in_group("door")
 	
 	for door in doors:
@@ -61,21 +24,23 @@ func _process(_delta):
 		check_win()
 
 
-func _on_enemy_enemy_died():
-	pass
 	
-	
-func _on_door_entered(doorname):
+func _on_door_entered(doorname : String, enemy_status_effects: Array[Status_Effects_Resource]):
 	has_won=false
 	hide_doors()
+	enemy_bonus=enemy_status_effects
+	$Player.global_position=$PlayerSpawner.global_position
 	spawn_enemies(3)
+	
+	
 	
 	
 func spawn_enemies(enemyCount:int = 1):
 	for enemy in enemyCount:
 		var new_enemy = enemy_scene.instantiate()
 		new_enemy.global_position=Vector2(randi_range(20,get_viewport_rect().size.x-20), randi_range(50,get_viewport_rect().size.y/3))
-		new_enemy.connect("enemy_died", _on_enemy_enemy_died)
+		if enemy_bonus:
+			new_enemy.status_effect_resource=enemy_bonus
 		add_child(new_enemy)
 	
 func show_doors():

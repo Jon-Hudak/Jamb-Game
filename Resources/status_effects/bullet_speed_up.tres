@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Status_Effects_Resource" load_steps=2 format=3 uid="uid://cu6nc6m6l8dlr"]
+
+[ext_resource type="Script" path="res://status_effects_resource.gd" id="1_nqy4g"]
+
+[resource]
+script = ExtResource("1_nqy4g")
+magazine_size = 0
+fire_rate = 0.0
+damage = 0
+bullet_speed = 30
+movement_speed = 0
+max_health = 0
+isDebuff = false
+extra_bullets_in_spread = 0
+bullet_spread_angle = 0.0
+door_message = "+Bullet Speed"

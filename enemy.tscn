@@ -1,10 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://qjm3k0r8nisy"]
+[gd_scene load_steps=7 format=3 uid="uid://qjm3k0r8nisy"]
 
 [ext_resource type="Script" path="res://Enemy.gd" id="1_ifqy1"]
 [ext_resource type="Texture2D" uid="uid://5lqe5pp65giq" path="res://Assets/Sprite-0004-Sheet.png" id="2_f0e1n"]
-[ext_resource type="Script" path="res://Gun.gd" id="3_3let3"]
-[ext_resource type="Resource" uid="uid://bxnukga7jjyf2" path="res://Resources/pistol.tres" id="4_xtwqv"]
-[ext_resource type="PackedScene" uid="uid://dxra8funy7eji" path="res://bullet.tscn" id="5_pgg7e"]
+[ext_resource type="PackedScene" uid="uid://cq8bgmoeh7410" path="res://gun.tscn" id="3_25elu"]
 [ext_resource type="PackedScene" uid="uid://dg17o6xksh21u" path="res://BloodParticles.tscn" id="6_c4tlr"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ghygt"]
@@ -38,18 +36,17 @@ sprite_frames = SubResource("SpriteFrames_ghygt")
 position = Vector2(0, 16)
 shape = SubResource("CapsuleShape2D_8a6du")
 
-[node name="Gun" type="Node2D" parent="."]
-position = Vector2(-1, 4)
-script = ExtResource("3_3let3")
-resource = ExtResource("4_xtwqv")
-bullet_scene = ExtResource("5_pgg7e")
-current_weapon = ExtResource("4_xtwqv")
-
-[node name="FireRateTimer" type="Timer" parent="Gun"]
-one_shot = true
+[node name="Gun" parent="." instance=ExtResource("3_25elu")]
 
 [node name="BloodParticles" parent="." instance=ExtResource("6_c4tlr")]
 color = Color(0.345098, 0.490196, 0.258824, 0.811765)
 
+[node name="ShootTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="MoveTimer" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="tree_exited" from="." to="." method="_on_tree_exited"]
-[connection signal="timeout" from="Gun/FireRateTimer" to="Gun" method="_on_fire_rate_timer_timeout"]
+[connection signal="timeout" from="ShootTimer" to="." method="_on_shoot_timer_timeout"]
+[connection signal="timeout" from="MoveTimer" to="." method="_on_move_timer_timeout"]

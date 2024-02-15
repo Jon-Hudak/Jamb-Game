@@ -1,7 +1,7 @@
 extends Area2D
 
 @export var speed : int = 100
-@export var damage: float = 50
+@export var damage: float = 0
 @export var sprite: CompressedTexture2D
 @export var sprite_scale: float = 1
 
@@ -25,6 +25,7 @@ func _physics_process(delta):
 func _on_body_entered(body):
 	if body.has_method("take_damage"):
 		body.take_damage(damage)
+		print(damage)
 		queue_free()
 		
 	
