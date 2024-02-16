@@ -25,10 +25,10 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	look_at(target)
+	pass
 	
 	
-func update_gun():
+func update_gun():	
 	damage += resource.damage
 	bullet_speed += resource.bullet_speed
 	extra_bullets_in_spread += resource.extra_bullets_in_spread

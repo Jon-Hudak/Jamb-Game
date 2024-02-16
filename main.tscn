@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://xjlmc1nffh6s"]
+[gd_scene load_steps=17 format=3 uid="uid://xjlmc1nffh6s"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_4qa7l"]
 [ext_resource type="PackedScene" uid="uid://cikc8nbmcdefa" path="res://player.tscn" id="3_kxrvv"]
@@ -10,6 +10,7 @@
 [ext_resource type="Resource" uid="uid://bxnukga7jjyf2" path="res://Resources/pistol.tres" id="8_jyg0k"]
 [ext_resource type="PackedScene" uid="uid://dxra8funy7eji" path="res://bullet.tscn" id="9_mq7t7"]
 [ext_resource type="PackedScene" uid="uid://dg17o6xksh21u" path="res://BloodParticles.tscn" id="10_dwb2b"]
+[ext_resource type="FontFile" uid="uid://c2hmtum28087v" path="res://Varnished.ttf" id="11_ruo62"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8niew"]
 size = Vector2(288.375, 20)
@@ -22,6 +23,19 @@ size = Vector2(290, 14.75)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sfxeb"]
 size = Vector2(17.75, 167)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kgo7o"]
+bg_color = Color(0, 0, 0, 0.827451)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 26
+corner_radius_bottom_left = 25
+corner_detail = 1
 
 [node name="Main" type="Node2D"]
 y_sort_enabled = true
@@ -171,5 +185,51 @@ one_shot = true
 
 [node name="MoveTimer2" type="Timer" parent="Boss"]
 one_shot = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 1.0
+offset_top = 491.0
+offset_right = 1160.0
+offset_bottom = 632.0
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -25.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 10
+
+[node name="Panel" type="Panel" parent="CanvasLayer/Control/MarginContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_kgo7o")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/MarginContainer/Panel"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 0
+offset_right = 961.0
+offset_bottom = 62.0
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 20
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/MarginContainer/Panel/MarginContainer"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+theme_override_constants/line_spacing = 20
+theme_override_fonts/font = ExtResource("11_ruo62")
+theme_override_font_sizes/font_size = 38
+text = "Welcome to JAMB GAME. Part of the Brackey 2-24 game Jam :)"
+autowrap_mode = 3
 
 [connection signal="timeout" from="Boss/Gun2/FireRateTimer" to="Boss/Gun2" method="_on_fire_rate_timer_timeout"]
