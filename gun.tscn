@@ -5,11 +5,13 @@
 [ext_resource type="PackedScene" uid="uid://dxra8funy7eji" path="res://bullet.tscn" id="3_gc8sy"]
 
 [node name="Gun" type="Node2D"]
-position = Vector2(-1, 4)
 script = ExtResource("1_tqfy5")
 resource = ExtResource("2_7gvdn")
 bullet_scene = ExtResource("3_gc8sy")
 current_weapon = ExtResource("2_7gvdn")
+
+[node name="Barrel" type="Marker2D" parent="."]
+unique_name_in_owner = true
 
 [node name="FireRateTimer" type="Timer" parent="."]
 one_shot = true

@@ -14,50 +14,70 @@ signal boss_died
 @export var status_effect_resource : Array[Status_Effects_Resource]
 var strafe_direction : Vector2 = Vector2.ZERO
 var direction : Vector2 = Vector2.ZERO
-var isAttacking : bool = false
+var isAttacking : bool = true
 var health : int
 var added_speed : int = 0
-var attack_list : Array = [ "shoot","bowling_attack", "circle_attack",]
+var attack_list : Array = [ "shoot","mic_spin", "circle_attack",]
 var current_attack = attack_list[0]
+var fire_rate : float = 1
+var isDefeated : bool = false
+
 
 
 func _ready():
+	$AnimatedSprite2D.animation="(F) One Arm Up"
+	$AnimatedSprite2D.play()
+	#fire_rate=%Gun.fire_rate
 	if status_effect_resource:
 		update_stats(status_effect_resource)
-	health=max_health
-	print("damage: ",$Gun.damage, "Health: ", max_health, "currHP",health )
-	$Gun.target=player.global_position
+	health=max_health 
+	#print("damage: ",.damage, "Health: ", max_health, "currHP",health )
+	%Gun.target=player.global_position
 	move_timer.start(calculate_timer())
+	
+	%Gun.isNested=true
 	
 	
 	#direction=update_direction()
 
 func _physics_process(_delta):
-	$Gun.target=player.global_position
-	
-	if isAttacking && current_attack=="bowling_attack":
-		if move() == true:
-			update_direction(player,false)
-			
-			
-	else:
-		shoot()
-		if move() == true:
-			update_direction(player,true)
-	
-	
+	if isDefeated:
+		print($DeathAnimTimer.time_left)
+		if $DeathAnimTimer.time_left<=0:
+			$AnimatedSprite2D.animation="(F) Two Arms Up"
+		else: 
+			$AnimatedSprite2D.animation = "(F) Ducking"	
 		
+	else:
+		%Gun.target=player.global_position
+		print(fire_rate)
+		if isAttacking && current_attack=="bowling_attack":
+			if move() == true:
+				update_direction(player,false)
+				
+				
+		else:
+			shoot()
+			if move() == true:
+				update_direction(player,true)
+		
+		
+			
 
 func take_damage(damage):
 	$BloodParticles.emitting= true
 	health-=damage
 	if health<=0:
-		queue_free()
+		#queue_free()
+		$GunNode.queue_free()
+		isDefeated=true
+		$DeathAnimTimer.start(2)
 		emit_signal("enemy_died")
+		emit_signal("boss_died")
 		
 func shoot():
-	$Gun.target=player.global_position
-	$Gun.shoot()
+	%Gun.target=player.global_position
+	%Gun.shoot()
 	
 func update_direction(target=player, random : bool = true):
 	var direction_to_target = global_position.direction_to(target.global_position)
@@ -77,9 +97,10 @@ func calculate_timer(min=timer_max, max=timer_max):
 
 
 func _on_move_timer_timeout():
-	current_attack=attack_list.pick_random()
-	call(current_attack)
-	print(current_attack)
+	if !isDefeated:
+		current_attack=attack_list.pick_random()
+		call(current_attack)
+		
 	
 	
 
@@ -89,6 +110,11 @@ func _on_shoot_timer_timeout():
 	update_direction(player, true)
 	move_timer.start(calculate_timer())
 	isAttacking=false
+	%Gun.isAttacking=false
+	$AnimationPlayer.stop()
+	#$AnimatedSprite2D.animation("(F) Talking")
+	$GunNode.rotation=0
+	%Gun.fire_rate=fire_rate
 
 
 func bowling_attack():
@@ -99,12 +125,16 @@ func bowling_attack():
 	isAttacking=true
 
 func circle_attack():
-	$Gun.circle_attack()
+	%Gun.circle_attack()
 	print("circle_attack")
 	shoot()	
 	shoot_timer.start(calculate_timer())
 	isAttacking=true
 	
+func mic_spin():
+	$AnimationPlayer.play("Mic Spin")
+	shoot_timer.start(5)
+	%Gun.fire_rate-= 0.45
 	
 func update_stats(new_resources : Array[Status_Effects_Resource]):
 	for new_resource : Status_Effects_Resource in new_resources:
@@ -113,10 +143,10 @@ func update_stats(new_resources : Array[Status_Effects_Resource]):
 		health+=new_resource.max_health
 		if health>max_health:
 			health=max_health
-		$Gun.fire_rate += new_resource.fire_rate
-		$Gun.damage += new_resource.damage
-		$Gun.bullet_speed += new_resource.bullet_speed
-		$Gun.extra_bullets_in_spread += new_resource.extra_bullets_in_spread
-		$Gun.weapon_change()
-		#$Gun.bullet_spread_angle += new_resource.bullet_spread_angle
+		%Gun.fire_rate += new_resource.fire_rate
+		%Gun.damage += new_resource.damage
+		%Gun.bullet_speed += new_resource.bullet_speed
+		%Gun.extra_bullets_in_spread += new_resource.extra_bullets_in_spread
+		%Gun.weapon_change()
+		#%Gun.bullet_spread_angle += new_resource.bullet_spread_angle
 

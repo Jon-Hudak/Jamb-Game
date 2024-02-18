@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3 uid="uid://dd010fwcxswy7"]
+
+[ext_resource type="PackedScene" uid="uid://cq8bgmoeh7410" path="res://gun.tscn" id="1_bt3us"]
+[ext_resource type="Texture2D" uid="uid://3tqmxna101rc" path="res://Mic.png" id="2_h4beg"]
+
+[node name="Microphone" type="Node2D"]
+
+[node name="Gun" parent="." instance=ExtResource("1_bt3us")]
+unique_name_in_owner = true
+position = Vector2(0.490753, -38.4726)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0.459454, -1.56634)
+rotation = 4.71239
+scale = Vector2(3, 3)
+texture = ExtResource("2_h4beg")
+offset = Vector2(6.81122, -0.486485)
+metadata/_aseprite_wizard_config_ = {
+"i_mode": 1,
+"keep_anim_length": false,
+"layer": "",
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"op_exp": false,
+"player": "",
+"source": "res://Assets/Mic.ase"
+}

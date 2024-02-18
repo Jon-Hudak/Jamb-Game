@@ -1,16 +1,13 @@
-[gd_scene load_steps=17 format=3 uid="uid://xjlmc1nffh6s"]
+[gd_scene load_steps=14 format=3 uid="uid://xjlmc1nffh6s"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_4qa7l"]
 [ext_resource type="PackedScene" uid="uid://cikc8nbmcdefa" path="res://player.tscn" id="3_kxrvv"]
 [ext_resource type="PackedScene" uid="uid://cl0jlas0hf11t" path="res://door.tscn" id="5_o832h"]
-[ext_resource type="PackedScene" uid="uid://bqldewmvd7lha" path="res://boss.tscn" id="6_b8314"]
 [ext_resource type="PackedScene" uid="uid://ir32po0sb3rq" path="res://shotgun_pickup.tscn" id="7_hsfff"]
 [ext_resource type="PackedScene" uid="uid://qjm3k0r8nisy" path="res://enemy.tscn" id="7_mqlxc"]
-[ext_resource type="Script" path="res://Gun.gd" id="7_t03u6"]
-[ext_resource type="Resource" uid="uid://bxnukga7jjyf2" path="res://Resources/pistol.tres" id="8_jyg0k"]
-[ext_resource type="PackedScene" uid="uid://dxra8funy7eji" path="res://bullet.tscn" id="9_mq7t7"]
-[ext_resource type="PackedScene" uid="uid://dg17o6xksh21u" path="res://BloodParticles.tscn" id="10_dwb2b"]
+[ext_resource type="PackedScene" uid="uid://bqldewmvd7lha" path="res://boss.tscn" id="8_ovasc"]
 [ext_resource type="FontFile" uid="uid://c2hmtum28087v" path="res://Varnished.ttf" id="11_ruo62"]
+[ext_resource type="AudioStream" uid="uid://bc23tj53ibm06" path="res://Assets/BGM/BGM.wav" id="12_kyada"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8niew"]
 size = Vector2(288.375, 20)
@@ -42,6 +39,7 @@ y_sort_enabled = true
 script = ExtResource("1_4qa7l")
 enemy_scene = ExtResource("7_mqlxc")
 enemy_limit = 10
+boss_scene = ExtResource("8_ovasc")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 z_index = -2
@@ -51,7 +49,8 @@ color = Color(0.729412, 0.729412, 0.729412, 1)
 
 [node name="Player" parent="." instance=ExtResource("3_kxrvv")]
 position = Vector2(581, 556)
-max_health = 40
+max_health = 500
+health = 500
 
 [node name="Change_Door" type="Node2D" parent="."]
 
@@ -61,15 +60,12 @@ scale = Vector2(3.08, 3.08)
 
 [node name="Door1" parent="." instance=ExtResource("5_o832h")]
 position = Vector2(234, 73)
-scale = Vector2(8.905, 4)
 
 [node name="Door2" parent="." instance=ExtResource("5_o832h")]
 position = Vector2(582, 73)
-scale = Vector2(8.905, 4)
 
 [node name="Door3" parent="." instance=ExtResource("5_o832h")]
 position = Vector2(929, 73)
-scale = Vector2(8.905, 4)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2(42, 91)
@@ -164,29 +160,8 @@ color = Color(0, 0, 0, 1)
 [node name="PlayerSpawner" type="Marker2D" parent="."]
 position = Vector2(585, 572)
 
-[node name="Boss" parent="." instance=ExtResource("6_b8314")]
-position = Vector2(578, 221)
-
-[node name="Gun2" type="Node2D" parent="Boss"]
-position = Vector2(-1, 4)
-script = ExtResource("7_t03u6")
-resource = ExtResource("8_jyg0k")
-bullet_scene = ExtResource("9_mq7t7")
-current_weapon = ExtResource("8_jyg0k")
-
-[node name="FireRateTimer" type="Timer" parent="Boss/Gun2"]
-one_shot = true
-
-[node name="BloodParticles2" parent="Boss" instance=ExtResource("10_dwb2b")]
-color = Color(0.345098, 0.490196, 0.258824, 0.811765)
-
-[node name="ShootTimer2" type="Timer" parent="Boss"]
-one_shot = true
-
-[node name="MoveTimer2" type="Timer" parent="Boss"]
-one_shot = true
-
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="Control" type="Control" parent="CanvasLayer"]
 layout_mode = 3
@@ -232,4 +207,18 @@ theme_override_font_sizes/font_size = 38
 text = "Welcome to JAMB GAME. Part of the Brackey 2-24 game Jam :)"
 autowrap_mode = 3
 
-[connection signal="timeout" from="Boss/Gun2/FireRateTimer" to="Boss/Gun2" method="_on_fire_rate_timer_timeout"]
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("12_kyada")
+autoplay = true
+
+[node name="Marker2D" type="Marker2D" parent="."]
+position = Vector2(234, 197)
+
+[node name="Marker2D2" type="Marker2D" parent="."]
+position = Vector2(580, 187)
+
+[node name="Marker2D3" type="Marker2D" parent="."]
+position = Vector2(931, 185)
+
+[node name="Boss" parent="." instance=ExtResource("8_ovasc")]
+position = Vector2(595, 152)

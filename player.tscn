@@ -1,10 +1,8 @@
-[gd_scene load_steps=36 format=3 uid="uid://cikc8nbmcdefa"]
+[gd_scene load_steps=34 format=3 uid="uid://cikc8nbmcdefa"]
 
 [ext_resource type="Script" path="res://Player.gd" id="1_qrk72"]
 [ext_resource type="Texture2D" uid="uid://bfuxvkwqwtpvg" path="res://Assets/Player-Sheet.png" id="2_ol3yn"]
-[ext_resource type="Script" path="res://Gun.gd" id="3_k507e"]
-[ext_resource type="Resource" uid="uid://bxnukga7jjyf2" path="res://Resources/pistol.tres" id="4_1n6rb"]
-[ext_resource type="PackedScene" uid="uid://dxra8funy7eji" path="res://bullet.tscn" id="5_je4re"]
+[ext_resource type="PackedScene" uid="uid://cq8bgmoeh7410" path="res://gun.tscn" id="5_i74r6"]
 [ext_resource type="PackedScene" uid="uid://dg17o6xksh21u" path="res://BloodParticles.tscn" id="6_m66a5"]
 [ext_resource type="Texture2D" uid="uid://byrxvmar012jr" path="res://Player.png" id="7_epdv7"]
 
@@ -72,7 +70,6 @@ radius = 22.0
 height = 46.0
 
 [sub_resource type="Animation" id="Animation_vw4oa"]
-length = 0.1
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -100,7 +97,6 @@ tracks/1/keys = {
 }
 
 [sub_resource type="Animation" id="Animation_w455n"]
-length = 0.1
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -128,7 +124,6 @@ tracks/1/keys = {
 }
 
 [sub_resource type="Animation" id="Animation_7gjx2"]
-length = 0.1
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -396,17 +391,8 @@ animation = &"left"
 position = Vector2(1, 21)
 shape = SubResource("CapsuleShape2D_8a6du")
 
-[node name="Gun" type="Node2D" parent="."]
-script = ExtResource("3_k507e")
-fired_by_player = true
-resource = ExtResource("4_1n6rb")
-bullet_scene = ExtResource("5_je4re")
-current_weapon = ExtResource("4_1n6rb")
-
-[node name="FireRateTimer" type="Timer" parent="Gun"]
-one_shot = true
-
 [node name="BloodParticles" parent="." instance=ExtResource("6_m66a5")]
+color = Color(1, 0, 0, 0.811765)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
@@ -447,4 +433,4 @@ parameters/conditions/is_walking = false
 parameters/Idle/blend_position = Vector2(-0.966746, -1.27445)
 parameters/Walking/blend_position = Vector2(0, 0)
 
-[connection signal="timeout" from="Gun/FireRateTimer" to="Gun" method="_on_fire_rate_timer_timeout"]
+[node name="Gun" parent="." instance=ExtResource("5_i74r6")]

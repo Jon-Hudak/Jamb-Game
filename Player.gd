@@ -8,7 +8,7 @@ var status_effect_resources : Array[Status_Effects_Resource]
 
 func _ready():
 		global_position=Vector2(get_viewport_rect().size.x/2, get_viewport_rect().size.y - 80)
-		
+		$Gun.fired_by_player=true
 		
 func _physics_process(_delta):
 	var input_direction = Vector2(
@@ -19,24 +19,24 @@ func _physics_process(_delta):
 	Input.get_action_strength("shoot_right") - Input.get_action_strength("shoot_left"),
 	Input.get_action_strength("shoot_down") - Input.get_action_strength("shoot_up")
 	)
-	print(shot_direction)
+
 	$Gun.target=shot_direction if shot_direction!= Vector2.ZERO else get_global_mouse_position() 
 	velocity=speed*input_direction.normalized()
 	
 	# Flip sprite whan moving left
-	$Sprite2D.flip_h=true if velocity.x<0 else false
+	$Sprite2D.flip_h=true if input_direction.x<0 else false
 	
 	
 	if Input.is_action_pressed("shoot") || Input.is_action_pressed("shoot_up") || Input.is_action_pressed("shoot_down") || Input.is_action_pressed("shoot_right") || Input.is_action_pressed("shoot_left"):
 		$Gun.shoot()
 		
-	if global_position.direction_to(shot_direction).x<0:
-		#flip sprite when aiming left (overwrites movement)
-		$Sprite2D.flip_h=true 
-	else:
-		$Sprite2D.flip_h=false
+		if global_position.direction_to(get_global_mouse_position()).x<0:
+			#flip sprite when aiming left (overwrites movement)
+			$Sprite2D.flip_h=true 
+		else:
+			$Sprite2D.flip_h=false
+				
 			
-		
 	if velocity!=Vector2.ZERO:
 		move_and_slide()
 		set_walking(true)

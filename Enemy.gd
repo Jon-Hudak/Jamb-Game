@@ -22,7 +22,7 @@ func _ready():
 	if status_effect_resource:
 		update_stats(status_effect_resource)
 	health=max_health
-	print("damage: ",$Gun.damage, "Health: ", max_health, "currHP",health )
+	#print("damage:", %Gun.damage, "Health: ", max_health, "currHP",health )
 	$Gun.target=player.global_position
 	move_timer.start(calculate_timer())
 	
